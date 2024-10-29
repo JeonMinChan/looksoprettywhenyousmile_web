@@ -3,16 +3,14 @@ import * as S from './style';
 import { useDebounce } from '@src/hooks';
 import { ArrowIcon, PreviousIcon } from '@src/assets/svg';
 import { useNavigate } from 'react-router-dom';
-import mokFrame1 from '@src/assets/images/mokFrame1.png';
-import mokFrame2 from '@src/assets/images/mokFrame2.png';
-import mokFrame3 from '@src/assets/images/mokFrame3.png';
-import mokFrame4 from '@src/assets/images/mokFrame4.png';
+import { mokFrame1, mokFrame2, mokFrame3, mokFrame4 } from '@src/assets/images';
 
 interface FrameInputProps {
   setIsSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setImgUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const FrameInputPage = ({ setIsSideBarOpen }: FrameInputProps) => {
+const FrameInputPage = ({ setIsSideBarOpen, setImgUrl }: FrameInputProps) => {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState<string>('');
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
@@ -79,13 +77,15 @@ const FrameInputPage = ({ setIsSideBarOpen }: FrameInputProps) => {
       {showFrames && (
         <S.FrameBox>
           {frames.map((frame, index) => (
-            <img
-              key={index}
-              src={frame}
-              alt={`Frame ${index + 1}`}
-              onClick={() => handleImageClick(index)}
+            <S.ImgBox
               className={selectedFrame === index ? 'selected' : ''}
-            />
+              onClick={() => {
+                handleImageClick(index);
+                setImgUrl(frame);
+              }}
+            >
+              <S.Img key={index} src={frame} alt={`Frame ${index + 1}`} />
+            </S.ImgBox>
           ))}
         </S.FrameBox>
       )}
