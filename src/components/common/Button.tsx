@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-interface BtnProps {
-  title: string;
-}
-
 const Btn = styled.button`
   width: 230px;
   height: 60px;
@@ -19,8 +15,13 @@ const Btn = styled.button`
   }
 `;
 
-const Button = ({ title }: BtnProps) => {
-  return <Btn>{title}</Btn>;
+interface ButtonProps {
+  title: string;
+  onClick?: () => void;
+}
+
+const Button = ({ title, onClick }: ButtonProps) => {
+  return <Btn onClick={onClick}>{title}</Btn>;
 };
 
 export default Button;
