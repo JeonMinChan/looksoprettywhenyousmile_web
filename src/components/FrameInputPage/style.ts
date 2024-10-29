@@ -13,14 +13,15 @@ export const Container = styled.div`
   box-shadow: 0rem 0.625rem 2.5rem 1.25rem rgba(0, 0, 0, 0.25);
 `;
 
-export const InputContainer = styled.div<{ isClicked: boolean }>`
+export const InputContainer = styled.div<{ isClicked: boolean; isFirstRender: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
   gap: 3.75rem;
-  transition: transform 0.5s ease-in-out;
-  transform: ${({ isClicked }) => (isClicked ? 'translateY(-12.5rem)' : 'translateY(0)')};
+  transition: ${({ isFirstRender }) => (isFirstRender ? 'transform 0.5s ease-in-out' : 'none')};
+  transform: ${({ isClicked }) => (isClicked ? 'translateY(-10rem)' : 'translateY(0)')};
 `;
 
 export const InputText = styled.p`
@@ -101,4 +102,25 @@ export const PreviousButton = styled.button`
   cursor: pointer;
   justify-content: center;
   align-items: center;
+`;
+
+export const FrameBox = styled.div`
+  display: flex;
+  margin-top: 4rem;
+  justify-content: center;
+  align-items: center;
+  gap: 1.875rem;
+
+  img {
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+
+    &:hover {
+      border-color: purple;
+    }
+
+    &.selected {
+      border-color: purple;
+    }
+  }
 `;
