@@ -71,7 +71,7 @@ const FrameInputPage = ({ setIsSideBarOpen, setImgUrl }: FrameInputProps) => {
         </S.InputBox>
       </S.InputContainer>
       {isClicked && <S.Spinner />}
-      <S.PreviousButton onClick={() => navigate(-1)}>
+      <S.PreviousButton onClick={() => navigate('/choose')}>
         <PreviousIcon />
       </S.PreviousButton>
       {showFrames && (

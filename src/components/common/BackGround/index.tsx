@@ -7,7 +7,9 @@ interface BackGroundProps {
 }
 
 const BackGround = ({ backgroundImgUrl, children }: BackGroundProps) => {
-  return <S.BackGround backgroundImgUrl={backgroundImgUrl}>{children}</S.BackGround>;
+  return (
+    <S.BackGround backgroundImgUrl={backgroundImgUrl}>{children}</S.BackGround>
+  );
 };
 
 export default BackGround;
