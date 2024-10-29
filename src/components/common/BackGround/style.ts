@@ -16,4 +16,5 @@ export const BackGround = styled.div<BackGroundProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 5rem;
 `;
