@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 interface BackGroundProps {
   backgroundImgUrl: string;
@@ -13,4 +13,7 @@ export const BackGround = styled.div<BackGroundProps>`
   ${({ backgroundImgUrl }) => css`
     background-image: url(${backgroundImgUrl});
   `}
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
