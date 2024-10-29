@@ -111,16 +111,32 @@ export const FrameBox = styled.div`
   align-items: center;
   gap: 1.875rem;
 
-  img {
-    border: 2px solid transparent;
+  div {
     transition: border-color 0.3s ease;
 
     &:hover {
-      border-color: purple;
+      background: #efefef;
     }
 
     &.selected {
-      border-color: purple;
+      background: #efefef;
     }
   }
+`;
+
+export const Img = styled.img`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 7.5rem;
+  height: 23.8125rem;
+  box-shadow: 0.1875rem 0.25rem 0.625rem 0.1875rem rgba(0, 0, 0, 0.25);
+`;
+
+export const ImgBox = styled.div`
+  display: flex;
+  padding: 1.25rem;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.625rem;
 `;
