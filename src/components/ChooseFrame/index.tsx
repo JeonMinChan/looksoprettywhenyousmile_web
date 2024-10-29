@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import BackGround from "../common/BackGround";
-import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
-import WhiteFrame from "@src/assets/img/whiteFrame.svg";
-import BlackFrame from "@src/assets/img/blackFrame.svg";
-import DsmFrame from "@src/assets/img/dsmFrame.svg";
-import * as S from "./style";
+import React, { useState } from 'react';
+import BackGround from '../common/BackGround';
+import BackGRoundImg from '@src/assets/img/defaultBackground.svg';
+import WhiteFrame from '@src/assets/img/whiteFrame.svg';
+import BlackFrame from '@src/assets/img/blackFrame.svg';
+import DsmFrame from '@src/assets/img/dsmFrame.svg';
+import * as S from './style';
+import { useNavigate } from 'react-router-dom';
 
 interface Frame {
   id: number;
@@ -15,10 +16,12 @@ interface Frame {
 const ChooseFrame = () => {
   const [selectedFrameId, setSelectedFrameId] = useState<number | null>(null);
 
+  const navigate = useNavigate();
+
   const frameDetail: Frame[] = [
-    { id: 1, title: "기본 흰색 프레임", img: WhiteFrame },
-    { id: 2, title: "기본 검정색 프레임", img: BlackFrame },
-    { id: 3, title: "기본 DSM 프레임", img: DsmFrame },
+    { id: 1, title: '기본 흰색 프레임', img: WhiteFrame },
+    { id: 2, title: '기본 검정색 프레임', img: BlackFrame },
+    { id: 3, title: '기본 DSM 프레임', img: DsmFrame },
   ];
 
   const handleFrameClick = (id: number) => {
@@ -42,7 +45,7 @@ const ChooseFrame = () => {
               </S.FrameContainer>
             ))}
             <S.BtnContainer>
-              <S.Btn>AI로 생성하기</S.Btn>
+              <S.Btn onClick={() => navigate('/frame-input')}>AI로 생성하기</S.Btn>
               <S.Btn>사진 찍기</S.Btn>
             </S.BtnContainer>
           </S.Frame>
