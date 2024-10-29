@@ -1,12 +1,11 @@
 import React from "react";
 import "./App.css";
-import BackGround from "./components/common/BackGround";
-import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
+import ChooseFrame from "./components/ChooseFrame";
 
 function App() {
   return (
     <div className="App">
-      <BackGround backgroundImgUrl={BackGRoundImg}>asdf</BackGround>
+      <ChooseFrame />
     </div>
   );
 }
