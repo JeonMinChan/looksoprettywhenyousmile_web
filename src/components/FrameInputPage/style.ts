@@ -139,4 +139,5 @@ export const ImgBox = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 0.625rem;
+  cursor: pointer;
 `;
