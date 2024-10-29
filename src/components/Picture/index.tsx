@@ -12,12 +12,18 @@ const Picture = () => {
   const [pictureCount, setPictureCount] = useState(0);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [flash, setFlash] = useState(false);
+  const formDataRef = useRef(new FormData());
 
   const capturePhoto = useCallback(() => {
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
       if (imageSrc) {
-        localStorage.setItem(`photo_${pictureCount + 1}`, imageSrc);
+        const blob = dataURLtoBlob(imageSrc);
+        formDataRef.current.append(
+          `photo_${pictureCount + 1}`,
+          blob,
+          `photo_${pictureCount + 1}.png`,
+        );
         setPictureCount((prevCount) => prevCount + 1);
       }
     }
@@ -52,6 +58,17 @@ const Picture = () => {
 
     return () => clearTimeout(countdownTimer);
   }, [isTakingPictures, pictureCount, countdown, capturePhoto]);
+
+  const dataURLtoBlob = (dataURL: string) => {
+    const byteString = atob(dataURL.split(",")[1]);
+    const mimeString = dataURL.split(",")[0].split(":")[1].split(";")[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mimeString });
+  };
 
   return (
     <S.Layout>
