@@ -24,7 +24,7 @@ const ChooseFrame = () => {
   return (
     <BackGround backgroundImgUrl={BackGRoundImg}>
       <S.WhiteLayout>
-        <S.Title>프레임을 선택해주세요</S.Title>
+        <S.Title>프레임을 선택해주세요!</S.Title>
         <S.Frame>
           <FrameContainer
             frameType="흰색 프레임"
