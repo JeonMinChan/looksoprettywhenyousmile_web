@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 // import requestInterceptor from "./requestInterceptor";
 // import ResponseHandler from "./responseInterceptor";
 const axiosRequestConfig: AxiosRequestConfig = {
-  baseURL: CONFIG.server,
+  baseURL: CONFIG.nightServer,
 };
 
 const customAxios = axios.create(axiosRequestConfig);

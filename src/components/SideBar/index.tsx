@@ -113,6 +113,11 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ setIsSideBarOpen, se
               if (setIsSideBarOpen) {
                 setIsSideBarOpen(false);
               }
+            } else {
+              navigate("/background-change");
+              if (setIsSideBarOpen) {
+                setIsSideBarOpen(false);
+              }
             }
           }}
         >

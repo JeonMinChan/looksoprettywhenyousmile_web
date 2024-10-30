@@ -36,6 +36,8 @@ export const ImageContainer = styled.div`
   justify-content: center;
   width: 20%;
   gap: 1.875rem;
+
+  background: white;
 `;
 
 export const Picture = styled.img`

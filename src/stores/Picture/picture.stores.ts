@@ -6,8 +6,8 @@ interface FormStore {
 }
 
 interface PictureStore {
-  picture: string;
-  setPicture: (picture: string) => void;
+  picture: { src: string; top: number; left: number }[];
+  setPicture: (picture: { src: string; top: number; left: number }[]) => void;
 }
 
 export const pictureStore = create<FormStore>((set) => ({
@@ -29,6 +29,6 @@ export const pictureStore = create<FormStore>((set) => ({
 }));
 
 export const completePictureStore = create<PictureStore>((set) => ({
-  picture: "",
-  setPicture: (picture: string) => set(() => ({ picture })),
+  picture: [{ src: "", top: 0, left: 0 }],
+  setPicture: (newPicture) => set(() => ({ picture: newPicture })),
 }));

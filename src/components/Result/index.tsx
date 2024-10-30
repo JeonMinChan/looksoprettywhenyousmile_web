@@ -50,11 +50,7 @@ const Result = () => {
             <S.Frame src={mokFrame2} alt="프레임" />
             <S.QrContainer>
               <S.QrTitle>다운로드 QR코드</S.QrTitle>
-              <QRCodeSVG
-                value={downloadUrl || "https://www.naver.com"}
-                width={200}
-                height={200}
-              />
+              <QRCodeSVG value={downloadUrl || "https://www.naver.com"} width={200} height={200} />
               <S.TextContainer>
                 <S.Text1>사진이 자동으로 다운로드되지 않으면</S.Text1>
                 <S.UnderTextContainer>
