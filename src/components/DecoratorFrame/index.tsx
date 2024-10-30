@@ -8,16 +8,16 @@ import { mokFrame2 } from "@src/assets/images";
 import { DownLoadIcon } from "@src/assets/svg";
 import Draggable, { DraggableData } from "react-draggable";
 import { ResizableBox } from "react-resizable";
-import "react-resizable/css/styles.css"; // Resizable styles
+import "react-resizable/css/styles.css";
 
-const DecoratorFrame: React.FC = () => {
+const DecoratorFrame = () => {
   const navigate = useNavigate();
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [imageSize, setImageSize] = useState({ width: 200, height: 200 });
-  const [imagePosition, setImagePosition] = useState({ x: 0, y: 0 });
+  const [, setPosition] = useState({ x: 0, y: 0 });
 
   const trackPos = (data: DraggableData) => {
-    setImagePosition({ x: data.x, y: data.y });
+    setPosition({ x: data.x, y: data.y });
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,30 +40,26 @@ const DecoratorFrame: React.FC = () => {
       <S.GoBack src={GoBack} onClick={() => navigate(-1)} alt="뒤로가기" />
       <S.Layout>
         <S.MainContainer>
-          <Draggable>
-            <S.Frame src={mokFrame2} alt="Main frame" />
+          <Draggable onDrag={(_, data) => trackPos(data)}>
+            <img src={mokFrame2} alt="Main frame" style={{ zIndex: "100" }} />
           </Draggable>
           {uploadedImage && (
-            <Draggable
-              bounds="parent"
-              position={imagePosition}
-              onDrag={(_, data) => trackPos(data)}
-            >
+            <Draggable bounds="parent" position={{ x: 0, y: 0 }}>
               <ResizableBox
                 width={imageSize.width}
                 height={imageSize.height}
                 minConstraints={[50, 50]}
                 maxConstraints={[500, 500]}
                 onResize={handleResize}
-                resizeHandles={["ne", "se", "sw", "nw"]}
-                style={{ position: "absolute", zIndex: 110 }}
+                resizeHandles={["se"]}
+                style={{ position: "absolute", zIndex: "110" }}
               >
-                <S.UploadedImage
+                <img
                   src={uploadedImage}
-                  alt="Uploaded image"
+                  alt="Uploaded"
                   style={{
-                    width: `${imageSize.width}px`,
-                    height: `${imageSize.height}px`,
+                    width: "100%",
+                    height: "100%",
                     objectFit: "cover",
                   }}
                 />
@@ -75,7 +71,7 @@ const DecoratorFrame: React.FC = () => {
       <S.SlideContainer>
         <img src={mokFrame2} width={160} height={503} alt="Draggable frame" />
         <S.Orange>
-          <label htmlFor="upload-input">
+          <label htmlFor="upload-input" style={{ cursor: "pointer" }}>
             <DownLoadIcon />
           </label>
           <input
