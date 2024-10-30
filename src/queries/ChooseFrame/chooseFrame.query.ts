@@ -7,8 +7,9 @@ export const useFramePost = () => {
   return mutation;
 };
 
-export const useGetRandomFrame = () =>
+export const useGetRandomFrame = (shouldFetch: boolean) =>
   useQuery(QUERY_KEYS.frame, () => chooseFrameRespositoryImpl.getRandomFrame(), {
     staleTime: 1000 * 60 * 60, //5분
     cacheTime: 1000 * 60 * 60, //5분
+    enabled: shouldFetch,
   });

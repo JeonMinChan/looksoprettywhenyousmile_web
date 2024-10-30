@@ -6,6 +6,7 @@ import { FrameInputPage, Randing, SideBar, ChooseFrame, ShareToast } from "./com
 import BackGround from "./components/common/BackGround";
 import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
 import { QueryClient, QueryClientProvider } from "react-query";
+import FindFrame from "./components/FindFrame";
 
 function App() {
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
@@ -34,6 +35,7 @@ function App() {
               path="/frame-input"
               element={<FrameInputPage setIsSideBarOpen={setIsSideBarOpen} setImgUrl={setImgUrl} />}
             />
+            <Route path="/find-frame" element={<FindFrame />} />
           </Routes>
           {isSideBarOpen && <SideBar imgUrl={imgUrl} setIsShowModal={setIsShowModal} />}
           {isShowModal && <ShareToast setIsShowModal={setIsShowModal} />}

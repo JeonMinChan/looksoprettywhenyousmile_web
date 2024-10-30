@@ -4,8 +4,10 @@ import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
 import * as S from "./style";
 import FrameContainer from "../common/FrameContainer";
 import Button from "../common/Button";
+import { useNavigate } from "react-router-dom";
 
 const ChooseFrame = () => {
+  const navigate = useNavigate();
   return (
     <BackGround backgroundImgUrl={BackGRoundImg}>
       <S.WhiteLayout>
@@ -17,7 +19,7 @@ const ChooseFrame = () => {
           <S.BtnContainer>
             <Button title="직접 만들기" disabled />
             <Button title="AI로 생성하기" />
-            <Button title="프레임 찾아보기" />
+            <Button title="프레임 찾아보기" onClick={() => navigate("/find-frame")} />
             <Button title="사진 찍기" disabled />
           </S.BtnContainer>
         </S.Frame>
