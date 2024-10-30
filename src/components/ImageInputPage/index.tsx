@@ -10,7 +10,9 @@ interface ImageInputProps {
 }
 
 const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
-  const [copiedImages, setCopiedImages] = useState<{ src: string; top: number; left: number }[]>([]);
+  const [copiedImages, setCopiedImages] = useState<{ src: string; top: number; left: number; originalIndex: number }[]>(
+    []
+  );
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const [availablePositions, setAvailablePositions] = useState<{ index: number; top: number; left: number }[]>([]);
 
@@ -22,45 +24,42 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
   }, [setIsSideBarOpen]);
 
   const handleImageClick = (index: number, src: string) => {
-    setSelectedIndexes((prev) => {
-      const isAlreadySelected = prev.includes(index);
+    setSelectedIndexes((prevSelectedIndexes) => {
+      const isAlreadySelected = prevSelectedIndexes.includes(index);
 
       if (isAlreadySelected) {
-        const removedImagePosition = copiedImages.find((image) => image.src === src);
-
-        if (removedImagePosition) {
-          setAvailablePositions((positions) => [
-            ...positions,
-            { index, top: removedImagePosition.top, left: removedImagePosition.left },
-          ]);
-        }
-
-        setCopiedImages((images) => images.filter((image) => image.src !== src));
-        return prev.filter((i) => i !== index);
+        setCopiedImages((prevCopiedImages) => {
+          const removedImagePosition = prevCopiedImages.find((image) => image.originalIndex === index);
+          if (removedImagePosition) {
+            setAvailablePositions((positions) => [
+              { index, top: removedImagePosition.top, left: removedImagePosition.left },
+              ...positions,
+            ]);
+          }
+          return prevCopiedImages.filter((image) => image.originalIndex !== index);
+        });
+        return prevSelectedIndexes.filter((i) => i !== index);
       }
 
-      if (prev.length < 4) {
-        const newPosition = { src, top: 0, left: 0 };
+      if (prevSelectedIndexes.length < 4) {
+        const newPosition = { src, top: 0, left: 0, originalIndex: index };
 
         if (availablePositions.length > 0) {
           const position = availablePositions[0];
           newPosition.top = position.top;
           newPosition.left = position.left;
-
           setAvailablePositions((positions) => positions.slice(1));
-        } else {
-          if (sideBarRef.current) {
-            const sidebarRect = sideBarRef.current.getBoundingClientRect();
-            newPosition.top = sidebarRect.top + 65 + prev.length * 99.5;
-            newPosition.left = sidebarRect.left + 46.5;
-          }
+        } else if (sideBarRef.current) {
+          const sidebarRect = sideBarRef.current.getBoundingClientRect();
+          newPosition.top = sidebarRect.top + 65 + prevSelectedIndexes.length * 99.5;
+          newPosition.left = sidebarRect.left + 46.5;
         }
 
         setCopiedImages((images) => [...images, newPosition]);
-        return [...prev, index];
+        return [...prevSelectedIndexes, index];
       }
 
-      return prev;
+      return prevSelectedIndexes;
     });
   };
 
@@ -96,6 +95,7 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
                 key={`${image.src}-${index}`}
                 src={image.src}
                 alt={`복사본-${index}`}
+                onClick={() => handleImageClick(image.originalIndex, image.src)}
                 style={{
                   position: 'absolute',
                   top: image.top,
