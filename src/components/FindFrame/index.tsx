@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import BackGround from "../common/BackGround";
 import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
 import GoBack from "@src/assets/img/goBack.svg";
-import { mokFrame1, mokFrame2, mokFrame3, mokFrame4 } from "@src/assets/images";
 import * as S from "./style";
 import SideBar from "../SideBar";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +36,10 @@ const FindFrame = () => {
           <S.Title>원하는 프레임을 선택해주세요!</S.Title>
           <S.FrameLayout>
             {sharedFrame?.frames.map((detail) => (
-              <S.FrameContainer key={detail} onClick={() => handleFrameClick(detail)}>
+              <S.FrameContainer
+                key={detail}
+                onClick={() => handleFrameClick(detail)}
+              >
                 <img src={detail} alt="프레임 사진" style={{ width: 120 }} />
               </S.FrameContainer>
             ))}
@@ -50,7 +52,7 @@ const FindFrame = () => {
           <SideBar imgUrl={selectedFrame} setIsShowModal={() => false} />
         </div>
       )}
-              <S.SlideContainer show={Boolean(selectedFrame)}>
+      <S.SlideContainer show={Boolean(selectedFrame)}>
         {selectedFrame && (
           <SideBar imgUrl={selectedFrame} setIsShowModal={() => false} />
         )}
