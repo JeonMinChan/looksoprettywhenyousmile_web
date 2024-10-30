@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Btn = styled.button<{ disabled?: boolean }>`
-  width: 230px;
-  height: 60px;
+  width: 12.5rem;
+  height: 3.75rem;
   background-color: ${({ disabled }) => (disabled ? '#FEB580' : '#ff7a1b')};
   border-radius: 10px;
   border: none;

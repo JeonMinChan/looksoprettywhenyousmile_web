@@ -44,7 +44,7 @@ export const InputBox = styled.div`
 
 export const Input = styled.input`
   display: flex;
-  width: 90%;
+  width: 85%;
   padding-left: 3.125rem;
   justify-content: space-between;
   align-items: center;

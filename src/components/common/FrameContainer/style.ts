@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Layout = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  background-color: ${({ isActive }) => (isActive ? "#efefef" : "white")};
+  width: 10rem;
+  height: 28.875rem;
+  background-color: ${({ isActive }) => (isActive ? '#efefef' : 'white')};
   cursor: pointer;
   transition: border-color 0.3s;
   border-radius: 10px;
