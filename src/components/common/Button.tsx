@@ -10,9 +10,6 @@ const Btn = styled.button`
   font-size: 24px;
   font-weight: 600;
   cursor: pointer;
-  &:hover {
-    background-color: #feb580;
-  }
 `;
 
 interface ButtonProps {
