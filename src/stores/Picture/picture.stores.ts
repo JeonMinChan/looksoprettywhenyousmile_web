@@ -5,6 +5,11 @@ interface FormStore {
   addPhoto: (blob: Blob, pictureCount: number) => void;
 }
 
+interface PictureStore {
+  picture: string;
+  setPicture: (picture: string) => void;
+}
+
 export const pictureStore = create<FormStore>((set) => ({
   formData: new FormData(),
   addPhoto: (blob, pictureCount) => {
@@ -21,4 +26,9 @@ export const pictureStore = create<FormStore>((set) => ({
       return { formData: newFormData };
     });
   },
+}));
+
+export const completePictureStore = create<PictureStore>((set) => ({
+  picture: "",
+  setPicture: (picture: string) => set(() => ({ picture })),
 }));

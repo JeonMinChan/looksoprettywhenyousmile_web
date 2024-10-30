@@ -1,12 +1,12 @@
-import React, { useCallback, useRef, useState, useEffect } from 'react';
-import BackGround from '../common/BackGround';
-import BackGRoundImg from '@src/assets/img/defaultBackground.svg';
-import GoBack from '@src/assets/img/goBack.svg';
-import WhiteCamara from '@src/assets/img/whiteCamara.svg';
-import * as S from './style';
-import Webcam from 'react-webcam';
-import { pictureStore } from '@src/stores/Picture/picture.stores';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useRef, useState, useEffect } from "react";
+import BackGround from "../common/BackGround";
+import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
+import GoBack from "@src/assets/img/goBack.svg";
+import WhiteCamara from "@src/assets/img/whiteCamara.svg";
+import * as S from "./style";
+import Webcam from "react-webcam";
+import { pictureStore } from "@src/stores/Picture/picture.stores";
+import { useNavigate } from "react-router-dom";
 
 const Picture = () => {
   const webcamRef = useRef<Webcam>(null);
@@ -51,15 +51,15 @@ const Picture = () => {
     } else if (pictureCount === 8) {
       setIsTakingPictures(false);
       setCountdown(null);
-      navigate('/image-input');
+      navigate("/image-input");
     }
 
     return () => clearTimeout(countdownTimer);
   }, [isTakingPictures, pictureCount, countdown, capturePhoto]);
 
   const dataURLtoBlob = (dataURL: string) => {
-    const byteString = atob(dataURL.split(',')[1]);
-    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+    const byteString = atob(dataURL.split(",")[1]);
+    const mimeString = dataURL.split(",")[0].split(":")[1].split(";")[0];
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
     for (let i = 0; i < byteString.length; i++) {
@@ -72,7 +72,7 @@ const Picture = () => {
     <S.Layout>
       <BackGround backgroundImgUrl={BackGRoundImg}>
         <S.Container>
-          <S.GoBack src={GoBack} alt="뒤로가기" onClick={() => navigate('/frame-input')} />
+          <S.GoBack src={GoBack} alt="뒤로가기" onClick={() => navigate("/frame-input")} />
           <S.Camera flash={flash}>
             <Webcam ref={webcamRef} width={1280} height={880} mirrored={true} screenshotFormat="image/png" />
             {countdown !== null && <S.Timer>{countdown}</S.Timer>}

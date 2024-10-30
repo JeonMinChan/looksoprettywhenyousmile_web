@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import * as S from './style';
-import BackGround from '../common/BackGround';
-import BackGRoundImg from '@src/assets/img/defaultBackground.svg';
-import { DUMMY_PHOTO } from '@src/constants/Picture/picture.constants';
+import React, { useEffect, useState } from "react";
+import * as S from "./style";
+import BackGround from "../common/BackGround";
+import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
+import { DUMMY_PHOTO } from "@src/constants/Picture/picture.constants";
+// import { pictureStore } from "@src/stores/Picture/picture.stores";
 
 interface ImageInputProps {
   setIsSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -73,8 +74,8 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
                 src={item.img}
                 onClick={() => handleImageClick(index, item.img)}
                 style={{
-                  cursor: 'pointer',
-                  outline: selectedIndexes.includes(index) ? '0.4375rem solid #777' : 'none',
+                  cursor: "pointer",
+                  outline: selectedIndexes.includes(index) ? "0.4375rem solid #777" : "none",
                 }}
               />
             ))}
@@ -87,8 +88,8 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
                 src={item.img}
                 onClick={() => handleImageClick(index + 4, item.img)}
                 style={{
-                  cursor: 'pointer',
-                  outline: selectedIndexes.includes(index + 4) ? '0.4375rem solid #777' : 'none',
+                  cursor: "pointer",
+                  outline: selectedIndexes.includes(index + 4) ? "0.4375rem solid #777" : "none",
                 }}
               />
             ))}
@@ -98,12 +99,12 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
                 src={image.src}
                 alt={`복사본-${index}`}
                 style={{
-                  position: 'absolute',
+                  position: "absolute",
                   top: image.top,
                   left: image.left,
-                  width: '7.9375rem',
-                  height: '5.5rem',
-                  cursor: 'pointer',
+                  width: "7.9375rem",
+                  height: "5.5rem",
+                  cursor: "pointer",
                   zIndex: 5,
                 }}
               />
