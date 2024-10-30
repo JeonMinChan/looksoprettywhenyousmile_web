@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalStyle from './styles/globalStyle';
-import { FrameInputPage, Randing, SideBar, ChooseFrame, ShareToast } from './components';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { FrameInputPage, SideBar, ChooseFrame, ShareToast, Randing } from './components';
 
 import BackGround from './components/common/BackGround';
 import BackGRoundImg from '@src/assets/img/defaultBackground.svg';
@@ -16,36 +17,48 @@ function App() {
   const sideBarRef = useRef<HTMLDivElement | null>(null);
 
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        retryOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      },
+    },
+  });
 
   return (
-    <BrowserRouter>
-      <GlobalStyle />
-      <BackGround backgroundImgUrl={BackGRoundImg}>
-        <Routes>
-          <Route path="/" element={<Randing />} />
-          <Route path="/frame-choose" element={<ChooseFrame />} />
-          <Route path="/frame-find" element={<FindFrame />} />
-          <Route
-            path="/frame-input"
-            element={<FrameInputPage setIsSideBarOpen={setIsSideBarOpen} setImgUrl={setImgUrl} />}
-          />
-          <Route path="/photo" element={<Picture />} />
-          <Route
-            path="/image-input"
-            element={<ImageInput setIsSideBarOpen={setIsSideBarOpen} sideBarRef={sideBarRef} />}
-          />
-        </Routes>
-        {isSideBarOpen && (
-          <SideBar
-            imgUrl={imgUrl}
-            ref={sideBarRef}
-            setIsShowModal={setIsShowModal}
-            setIsSideBarOpen={setIsSideBarOpen}
-          />
-        )}
-        {isShowModal && <ShareToast setIsShowModal={setIsShowModal} />}
-      </BackGround>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <GlobalStyle />
+        <BackGround backgroundImgUrl={BackGRoundImg}>
+          <Routes>
+            <Route path="/" element={<Randing />} />
+            <Route path="/frame-choose" element={<ChooseFrame />} />
+            <Route path="/frame-find" element={<FindFrame />} />
+            <Route
+              path="/frame-input"
+              element={<FrameInputPage setIsSideBarOpen={setIsSideBarOpen} setImgUrl={setImgUrl} />}
+            />
+            <Route path="/photo" element={<Picture />} />
+            <Route
+              path="/image-input"
+              element={<ImageInput setIsSideBarOpen={setIsSideBarOpen} sideBarRef={sideBarRef} />}
+            />
+          </Routes>
+          {isSideBarOpen && (
+            <SideBar
+              imgUrl={imgUrl}
+              ref={sideBarRef}
+              setIsShowModal={setIsShowModal}
+              setIsSideBarOpen={setIsSideBarOpen}
+            />
+          )}
+          {isShowModal && <ShareToast setIsShowModal={setIsShowModal} />}
+        </BackGround>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

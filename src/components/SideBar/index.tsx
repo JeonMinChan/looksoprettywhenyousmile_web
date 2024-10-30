@@ -5,6 +5,9 @@ import * as S from './style';
 import { CameraIcon, DownLoadIcon, EditIcon, ShareIcon } from '@src/assets/svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { mokFrame1 } from '@src/assets/images';
+import { useFramePost } from '@src/queries/ChooseFrame/chooseFrame.query';
+import { showToast } from '@src/libs/swal/toast';
+import { AxiosError } from 'axios';
 
 interface SideBarProps {
   imgUrl: string;
@@ -44,6 +47,33 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBar
     });
   }
 
+  const createImageFile = async (): Promise<File> => {
+    const response = await fetch(imgUrl);
+    const blob = await response.blob();
+    const file = new File([blob], 'frame.png', { type: blob.type });
+    console.log(file);
+
+    return file;
+  };
+
+  const postFrameMutation = useFramePost();
+  const formData = new FormData();
+  const handleButtonClick = async () => {
+    if (path === 'frame-input') {
+      const imageFile = await createImageFile();
+      setIsShowModal(true);
+      formData.append('image', imageFile);
+      postFrameMutation.mutate(formData.get('image')!, {
+        onSuccess: () => {
+          showToast('success', '이미지 공유 성공!');
+        },
+        onError: (error) => {
+          showToast('error', (error as AxiosError).message!);
+        },
+      });
+    }
+  };
+
   return (
     <S.Wrapper ref={ref}>
       <S.Img src={mokFrame1} alt={imgUrl} />
@@ -63,6 +93,7 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBar
             onClick={() => {
               if (path === 'frame-input') {
                 setIsShowModal(true);
+                handleButtonClick();
               } else if (path !== 'frame-input') {
                 captureSpecificArea(1530, 207.5, 160, 502.588);
               }

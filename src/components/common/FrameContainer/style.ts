@@ -1,22 +1,20 @@
 import styled from "styled-components";
 
-export const Layout = styled.main<{ isActive: boolean }>`
-  padding: 20px;
-  background-color: ${(props) => (props.isActive ? "#efefef" : "white")};
-  width: fit-content;
+export const Layout = styled.div<{ isActive: boolean }>`
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
+  padding: 20px;
+  background-color: ${({ isActive }) => (isActive ? "#efefef" : "white")};
   cursor: pointer;
-
+  transition: border-color 0.3s;
+  border-radius: 10px;
   &:hover {
     background-color: #efefef;
   }
 `;
 
 export const Title = styled.span`
-  color: #000;
   text-align: center;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 20px;
+  color: black;
 `;

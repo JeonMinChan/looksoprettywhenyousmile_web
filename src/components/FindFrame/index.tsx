@@ -1,25 +1,31 @@
-import React, { useState } from 'react';
 import BackGround from '../common/BackGround';
 import BackGRoundImg from '@src/assets/img/defaultBackground.svg';
 import GoBack from '@src/assets/img/goBack.svg';
-import { mokFrame1, mokFrame2, mokFrame3, mokFrame4 } from '@src/assets/images';
 import * as S from './style';
 import SideBar from '../SideBar';
 import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useGetRandomFrame } from '@src/queries/ChooseFrame/chooseFrame.query';
 
 const FindFrame = () => {
   const [selectedFrame, setSelectedFrame] = useState<string | null>(null);
+  const [shouldFetch, setShouldFetch] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const FrameDetail = [
-    { id: 1, img: mokFrame1 },
-    { id: 2, img: mokFrame2 },
-    { id: 3, img: mokFrame3 },
-    { id: 4, img: mokFrame4 },
-  ];
+  const { data: sharedFrame, refetch } = useGetRandomFrame(shouldFetch);
 
+  useEffect(() => {
+    if (shouldFetch) {
+      refetch();
+      setShouldFetch(false);
+    }
+  }, [shouldFetch, refetch]);
   const handleFrameClick = (img: string) => {
     setSelectedFrame(img);
+  };
+
+  const handleReloadFrames = () => {
+    setShouldFetch(true);
   };
 
   return (
@@ -29,15 +35,26 @@ const FindFrame = () => {
         <S.MainContainer>
           <S.Title>원하는 프레임을 선택해주세요!</S.Title>
           <S.FrameLayout>
-            {FrameDetail.map((detail) => (
-              <S.FrameContainer key={detail.id} onClick={() => handleFrameClick(detail.img)}>
-                <S.FrameImg src={detail.img} alt="프레임 사진" />
+            {sharedFrame?.frames.map((detail) => (
+              <S.FrameContainer key={detail} onClick={() => handleFrameClick(detail)}>
+                <img src={detail} alt="프레임 사진" style={{ width: 120 }} />
               </S.FrameContainer>
             ))}
           </S.FrameLayout>
-          <S.Btn>더 찾아보기</S.Btn>
+          <S.Btn onClick={handleReloadFrames}>더 찾아보기</S.Btn>
         </S.MainContainer>
       </S.Layout>
+      {selectedFrame && (
+        <div>
+          <SideBar
+            imgUrl={selectedFrame}
+            setIsShowModal={() => false}
+            setIsSideBarOpen={function (_value: React.SetStateAction<boolean>): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
+        </div>
+      )}
       <S.SlideContainer show={Boolean(selectedFrame)}>
         {selectedFrame && (
           <SideBar
