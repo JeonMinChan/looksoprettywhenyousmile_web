@@ -6,7 +6,7 @@ import Bear3 from "@src/assets/images/bear3.png";
 import { useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 
-const Randing = () => {
+const Landing = () => {
   const navigate = useNavigate();
   return (
     <S.Layout>
@@ -24,4 +24,4 @@ const Randing = () => {
   );
 };
 
-export default Randing;
+export default Landing;

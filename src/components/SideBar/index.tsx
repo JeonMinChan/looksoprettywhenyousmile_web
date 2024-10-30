@@ -1,22 +1,23 @@
+import { useFramePost } from "@src/queries/ChooseFrame/chooseFrame.query";
+import { showToast } from "@src/libs/swal/toast";
+import axios, { AxiosError } from "axios";
 import React, { useEffect, useState, forwardRef } from "react";
-
 import html2canvas from "html2canvas";
 import * as S from "./style";
 import { CameraIcon, DownLoadIcon, EditIcon, ShareIcon } from "@src/assets/svg";
 import { useLocation, useNavigate } from "react-router-dom";
-import { mokFrame1 } from "@src/assets/images";
-import { useFramePost } from "@src/queries/ChooseFrame/chooseFrame.query";
-import { showToast } from "@src/libs/swal/toast";
-import axios, { AxiosError } from "axios";
+import { useImgStore } from "@src/stores/img.store";
 
 interface SideBarProps {
   imgUrl: string;
-  setIsSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSideBarOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   setIsShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBarOpen, setIsShowModal }, ref) => {
+const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ setIsSideBarOpen, setIsShowModal }, ref) => {
   const navigate = useNavigate();
+
+  const imgUrl = useImgStore((state) => state.imgUrl);
 
   const { pathname } = useLocation();
   const [path, setPath] = useState<string>("");
@@ -103,13 +104,15 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBar
 
   return (
     <S.Wrapper ref={ref}>
-      <S.Img src={mokFrame1} alt={imgUrl} />
+      <S.Img src={imgUrl} alt={imgUrl} />
       <S.ButtonContainer path={path}>
         <S.Button
           onClick={() => {
             if (path === "frame-input") {
               navigate("/photo");
-              setIsSideBarOpen(false);
+              if (setIsSideBarOpen) {
+                setIsSideBarOpen(false);
+              }
             }
           }}
         >

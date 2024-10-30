@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as S from "./style";
 import BackGround from "../common/BackGround";
 import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
-import { DUMMY_PHOTO } from "@src/constants/Picture/picture.constants";
-// import { pictureStore } from "@src/stores/Picture/picture.stores";
+import { pictureStore } from "@src/stores/Picture/picture.stores";
 
 interface ImageInputProps {
   setIsSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,6 +13,9 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
   const [copiedImages, setCopiedImages] = useState<{ src: string; top: number; left: number }[]>([]);
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const [availablePositions, setAvailablePositions] = useState<{ index: number; top: number; left: number }[]>([]);
+
+  const formData = pictureStore((state) => state.formData);
+  const formDataObject = Object.fromEntries(formData.entries());
 
   useEffect(() => {
     setIsSideBarOpen(true);
@@ -62,37 +64,33 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
     });
   };
 
+  const pictures = Object.entries(formDataObject).map(([key, value], index) => {
+    if (value instanceof Blob) {
+      const imageUrl = URL.createObjectURL(value);
+      return (
+        <S.Picture
+          key={key}
+          src={imageUrl}
+          onClick={() => handleImageClick(index, imageUrl)}
+          style={{
+            cursor: "pointer",
+            outline: selectedIndexes.includes(index) ? "0.4375rem solid #777" : "none",
+          }}
+        />
+      );
+    }
+    return null;
+  });
+
   return (
     <BackGround backgroundImgUrl={BackGRoundImg}>
       <S.Layout>
         <S.Container>
           <S.Title>4장의 사진을 선택해주세요!</S.Title>
-          <S.ImageContainer>
-            {DUMMY_PHOTO.slice(0, 4).map((item, index) => (
-              <S.Picture
-                key={item.id}
-                src={item.img}
-                onClick={() => handleImageClick(index, item.img)}
-                style={{
-                  cursor: "pointer",
-                  outline: selectedIndexes.includes(index) ? "0.4375rem solid #777" : "none",
-                }}
-              />
-            ))}
-          </S.ImageContainer>
+          <S.ImageContainer>{pictures.slice(0, 4)}</S.ImageContainer>
 
           <S.ImageContainer>
-            {DUMMY_PHOTO.slice(4, 8).map((item, index) => (
-              <S.Picture
-                key={item.id}
-                src={item.img}
-                onClick={() => handleImageClick(index + 4, item.img)}
-                style={{
-                  cursor: "pointer",
-                  outline: selectedIndexes.includes(index + 4) ? "0.4375rem solid #777" : "none",
-                }}
-              />
-            ))}
+            {pictures.slice(4, 8)}
             {copiedImages.map((image, index) => (
               <img
                 key={`${image.src}-${index}`}

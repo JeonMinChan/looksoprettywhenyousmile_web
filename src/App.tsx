@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/globalStyle";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { FrameInputPage, SideBar, ChooseFrame, ShareToast, Randing } from "./components";
+import { FrameInputPage, SideBar, ChooseFrame, ShareToast, Landing } from "./components";
 
 import BackGround from "./components/common/BackGround";
 import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
@@ -35,17 +35,27 @@ function App() {
         <GlobalStyle />
         <BackGround backgroundImgUrl={BackGRoundImg}>
           <Routes>
-            <Route path="/" element={<Randing />} />
+            <Route path="/" element={<Landing />} />
             <Route path="/frame-choose" element={<ChooseFrame />} />
             <Route path="/frame-find" element={<FindFrame />} />
             <Route
               path="/frame-input"
-              element={<FrameInputPage setIsSideBarOpen={setIsSideBarOpen} setImgUrl={setImgUrl} />}
+              element={
+                <FrameInputPage
+                  setIsSideBarOpen={setIsSideBarOpen}
+                  setImgUrl={setImgUrl}
+                />
+              }
             />
             <Route path="/photo" element={<Picture />} />
             <Route
               path="/image-input"
-              element={<ImageInput setIsSideBarOpen={setIsSideBarOpen} sideBarRef={sideBarRef} />}
+              element={
+                <ImageInput
+                  setIsSideBarOpen={setIsSideBarOpen}
+                  sideBarRef={sideBarRef}
+                />
+              }
             />
             <Route path="/background-change" element={<ChagneBackground />} />
           </Routes>

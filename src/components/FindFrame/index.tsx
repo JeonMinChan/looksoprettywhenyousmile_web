@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useGetRandomFrame } from '@src/queries/ChooseFrame/chooseFrame.query';
 
+
 const FindFrame = () => {
   const [selectedFrame, setSelectedFrame] = useState<string | null>(null);
   const [shouldFetch, setShouldFetch] = useState<boolean>(true);
@@ -36,7 +37,10 @@ const FindFrame = () => {
           <S.Title>원하는 프레임을 선택해주세요!</S.Title>
           <S.FrameLayout>
             {sharedFrame?.frames.map((detail) => (
-              <S.FrameContainer key={detail} onClick={() => handleFrameClick(detail)}>
+              <S.FrameContainer
+                key={detail}
+                onClick={() => handleFrameClick(detail)}
+              >
                 <img src={detail} alt="프레임 사진" style={{ width: 120 }} />
               </S.FrameContainer>
             ))}
@@ -46,25 +50,11 @@ const FindFrame = () => {
       </S.Layout>
       {selectedFrame && (
         <div>
-          <SideBar
-            imgUrl={selectedFrame}
-            setIsShowModal={() => false}
-            setIsSideBarOpen={function (_value: React.SetStateAction<boolean>): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
+          <SideBar imgUrl={selectedFrame} setIsShowModal={() => false} />
         </div>
       )}
       <S.SlideContainer show={Boolean(selectedFrame)}>
-        {selectedFrame && (
-          <SideBar
-            imgUrl={selectedFrame}
-            setIsShowModal={() => false}
-            setIsSideBarOpen={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
-        )}
+        {selectedFrame && <SideBar imgUrl={selectedFrame} setIsShowModal={() => false} />}
       </S.SlideContainer>
     </BackGround>
   );
