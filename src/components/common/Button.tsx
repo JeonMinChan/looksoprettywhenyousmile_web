@@ -1,16 +1,20 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Btn = styled.button<{ disabled?: boolean }>`
   width: 230px;
   height: 60px;
-  background-color: ${({ disabled }) => (disabled ? "#FEB580" : "#ff7a1b")};
+  background-color: ${({ disabled }) => (disabled ? '#FEB580' : '#ff7a1b')};
   border-radius: 10px;
   border: none;
   color: black;
   font-size: 24px;
   font-weight: 600;
-  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+  z-index: 5;
+  &:hover {
+    background-color: #feb580;
+  }
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 `;
 
 interface ButtonProps {

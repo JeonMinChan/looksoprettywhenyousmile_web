@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CameraIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none">
+  <svg xmlns="http://www.w3.org/2000/svg" width="2.1875rem" height="2.1875rem" viewBox="0 0 60 60" fill="none">
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
