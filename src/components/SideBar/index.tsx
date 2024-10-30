@@ -5,9 +5,10 @@ import { CameraIcon, SaveIcon } from '@src/assets/svg';
 
 interface SideBarProps {
   imgUrl: string;
+  setIsShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SideBar = ({ imgUrl }: SideBarProps) => {
+const SideBar = ({ imgUrl, setIsShowModal }: SideBarProps) => {
   return (
     <S.Wrapper>
       <S.Img src={imgUrl} />
