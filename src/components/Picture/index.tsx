@@ -15,6 +15,7 @@ const Picture = () => {
   const [countdown, setCountdown] = useState<number | null>(null);
   const [flash, setFlash] = useState(false);
   // const formDataRef = useRef(new FormData());
+
   const setImageStore = pictureStore((state) => state.addPhoto);
   const navigate = useNavigate();
 
