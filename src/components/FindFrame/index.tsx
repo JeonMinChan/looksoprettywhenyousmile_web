@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import BackGround from "../common/BackGround";
 import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
 import GoBack from "@src/assets/img/goBack.svg";
+import { mokFrame1, mokFrame2, mokFrame3, mokFrame4 } from "@src/assets/images";
 import * as S from "./style";
-import Button from "../common/Button";
 import SideBar from "../SideBar";
 import { useNavigate } from "react-router-dom";
 import { useGetRandomFrame } from "@src/queries/ChooseFrame/chooseFrame.query";
@@ -21,7 +21,6 @@ const FindFrame = () => {
       setShouldFetch(false);
     }
   }, [shouldFetch, refetch]);
-
   const handleFrameClick = (img: string) => {
     setSelectedFrame(img);
   };
@@ -32,7 +31,7 @@ const FindFrame = () => {
 
   return (
     <BackGround backgroundImgUrl={BackGRoundImg}>
-      <S.Layout selectedFrame={!!selectedFrame}>
+      <S.Layout>
         <S.GoBack src={GoBack} onClick={() => navigate(-1)} alt="뒤로가기" />
         <S.MainContainer>
           <S.Title>원하는 프레임을 선택해주세요!</S.Title>
@@ -43,9 +42,7 @@ const FindFrame = () => {
               </S.FrameContainer>
             ))}
           </S.FrameLayout>
-          <S.Btn>
-            <Button title="다른 프레임 불러오기" onClick={handleReloadFrames} />
-          </S.Btn>
+          <S.Btn onClick={handleReloadFrames}>더 찾아보기</S.Btn>
         </S.MainContainer>
       </S.Layout>
       {selectedFrame && (
@@ -53,6 +50,11 @@ const FindFrame = () => {
           <SideBar imgUrl={selectedFrame} setIsShowModal={() => false} />
         </div>
       )}
+              <S.SlideContainer show={Boolean(selectedFrame)}>
+        {selectedFrame && (
+          <SideBar imgUrl={selectedFrame} setIsShowModal={() => false} />
+        )}
+      </S.SlideContainer>
     </BackGround>
   );
 };
