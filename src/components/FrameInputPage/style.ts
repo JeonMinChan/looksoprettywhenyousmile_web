@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: relative;
   display: flex;
-  width: 80rem;
-  height: 56.25rem;
+  width: 67.5rem;
+  height: 45rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -18,10 +18,10 @@ export const InputContainer = styled.div<{ isClicked: boolean; isFirstRender: bo
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   gap: 3.75rem;
   transition: ${({ isFirstRender }) => (isFirstRender ? 'transform 0.5s ease-in-out' : 'none')};
-  transform: ${({ isClicked }) => (isClicked ? 'translateY(-10rem)' : 'translateY(0)')};
+  transform: ${({ isClicked }) => (isClicked ? 'translateY(-5.5rem)' : 'translateY(0)')};
 `;
 
 export const InputText = styled.p`
@@ -32,8 +32,8 @@ export const InputText = styled.p`
 
 export const InputBox = styled.div`
   display: flex;
-  width: 67.5rem;
-  height: 6.25rem;
+  width: 50rem;
+  height: 5rem;
   padding-right: 1.25rem;
   justify-content: space-between;
   align-items: center;
@@ -106,7 +106,6 @@ export const PreviousButton = styled.button`
 
 export const FrameBox = styled.div`
   display: flex;
-  margin-top: 4rem;
   justify-content: center;
   align-items: center;
   gap: 1.875rem;
@@ -128,8 +127,8 @@ export const Img = styled.img`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 7.5rem;
-  height: 23.8125rem;
+  width: 6.25rem;
+  height: 19.84375rem;
   box-shadow: 0.1875rem 0.25rem 0.625rem 0.1875rem rgba(0, 0, 0, 0.25);
 `;
 

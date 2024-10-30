@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { css, keyframes } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -23,6 +23,7 @@ export const GoBack = styled.img`
   padding: 100px 0 0 100px;
   margin-bottom: auto;
   margin-right: auto;
+  cursor: pointer;
 `;
 
 export const Camera = styled.div<{ flash: boolean }>`
