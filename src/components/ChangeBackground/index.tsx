@@ -6,16 +6,18 @@ import { ArrowIcon, DownLoadIcon } from "@src/assets/svg";
 import { completePictureStore } from "@src/stores/Picture/picture.stores";
 import { useLinkPost } from "@src/queries/DownloadLink/downloadLink.query";
 import axios from "axios";
+import CONFIG from "@src/config/config.json";
+import { useDebounce } from "@src/hooks";
 
 const ChagneBackground = () => {
   const [keyword, setKeyword] = useState<string>("");
   const [isEmpty] = useState<boolean>(true);
   const [_, setImage] = useState<string>();
   const [deleteImage, setDeletedImage] = useState<any>();
-  const [, setIsClicked] = useState<boolean>(false);
-  const [, setIsFirstRender] = useState<boolean>(false);
+  const [aiImg, setAIImg] = useState<string[]>([]);
   const pictureStore = completePictureStore((state) => state.picture);
   const formData = new FormData();
+  const debouncedKeyword = useDebounce(keyword, 1000);
 
   const linkPostMutation = useLinkPost();
 
@@ -34,6 +36,7 @@ const ChagneBackground = () => {
       },
     });
   };
+
   const deleteBackGround = (image_url: string) => {
     axios
       .post(
@@ -59,12 +62,55 @@ const ChagneBackground = () => {
       });
   };
 
+  const postConvertImage = async () => {
+    try {
+      const base64 = deleteImage.split(",")[1];
+      const byteCharacters = atob(base64);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+
+      const blob = new Blob([byteArray], { type: "image/png" });
+
+      const imgUrl = URL.createObjectURL(blob);
+      const body = {
+        prompt: debouncedKeyword,
+        image: imgUrl,
+        steps: 20,
+        seed: 46588,
+        denoise: 0.75,
+        scheduler: "simple",
+        sampler_name: "euler",
+        base64: false,
+      };
+
+      const request = Array(4)
+        .fill(null)
+        .map(() =>
+          fetch(`${CONFIG.AIURL}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": `${CONFIG.AIKEY}`,
+            } as HeadersInit,
+            body: JSON.stringify(body),
+          })
+            .then((response) => response.blob())
+            .then((blob) => URL.createObjectURL(blob)),
+        );
+      const blolbImageUrls = await Promise.all(request);
+      setAIImg(blolbImageUrls);
+    } catch (error) {}
+  };
+
   return (
     <BackGround backgroundImgUrl={BackGRoundImg}>
       <S.Layout>
         <S.Container>
           {deleteImage ? (
-            <img src={deleteImage} alt="곰" style={{ width: "576px", height: "396px" }} />
+            <img src={deleteImage ? deleteImage : aiImg} alt="곰" style={{ width: "576px", height: "396px" }} />
           ) : (
             <span>선택된 사진 없음</span>
           )}
@@ -74,17 +120,7 @@ const ChagneBackground = () => {
               value={keyword}
               placeholder="| 산뜻한 바다 느낌 나게 해줘!"
             />
-            <S.IconButton
-              isEmpty={isEmpty}
-              onClick={() => {
-                if (isEmpty) {
-                  setIsClicked(false);
-                } else {
-                  setIsClicked(true);
-                  setIsFirstRender(true);
-                }
-              }}
-            >
+            <S.IconButton isEmpty={isEmpty} onClick={postConvertImage}>
               <ArrowIcon />
             </S.IconButton>
           </S.InputBox>
