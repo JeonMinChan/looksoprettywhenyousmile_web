@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import BackGround from "../common/BackGround";
-import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
-import GoBack from "@src/assets/img/goBack.svg";
-import { mokFrame1, mokFrame2, mokFrame3, mokFrame4 } from "@src/assets/images";
-import * as S from "./style";
-import SideBar from "../SideBar";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import BackGround from '../common/BackGround';
+import BackGRoundImg from '@src/assets/img/defaultBackground.svg';
+import GoBack from '@src/assets/img/goBack.svg';
+import { mokFrame1, mokFrame2, mokFrame3, mokFrame4 } from '@src/assets/images';
+import * as S from './style';
+import SideBar from '../SideBar';
+import { useNavigate } from 'react-router-dom';
 
 const FindFrame = () => {
   const [selectedFrame, setSelectedFrame] = useState<string | null>(null);
@@ -30,10 +30,7 @@ const FindFrame = () => {
           <S.Title>원하는 프레임을 선택해주세요!</S.Title>
           <S.FrameLayout>
             {FrameDetail.map((detail) => (
-              <S.FrameContainer
-                key={detail.id}
-                onClick={() => handleFrameClick(detail.img)}
-              >
+              <S.FrameContainer key={detail.id} onClick={() => handleFrameClick(detail.img)}>
                 <S.FrameImg src={detail.img} alt="프레임 사진" />
               </S.FrameContainer>
             ))}
@@ -43,7 +40,13 @@ const FindFrame = () => {
       </S.Layout>
       <S.SlideContainer show={Boolean(selectedFrame)}>
         {selectedFrame && (
-          <SideBar imgUrl={selectedFrame} setIsShowModal={() => false} />
+          <SideBar
+            imgUrl={selectedFrame}
+            setIsShowModal={() => false}
+            setIsSideBarOpen={function (): void {
+              throw new Error('Function not implemented.');
+            }}
+          />
         )}
       </S.SlideContainer>
     </BackGround>
