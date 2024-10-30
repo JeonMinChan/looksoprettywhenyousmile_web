@@ -5,6 +5,8 @@ import GoBack from "@src/assets/img/goBack.svg";
 import WhiteCamara from "@src/assets/img/whiteCamara.svg";
 import * as S from "./style";
 import Webcam from "react-webcam";
+import { pictureStore } from "@src/stores/Picture/picture.stores";
+import { useNavigate } from "react-router-dom";
 
 const Picture = () => {
   const webcamRef = useRef<Webcam>(null);
@@ -12,18 +14,16 @@ const Picture = () => {
   const [pictureCount, setPictureCount] = useState(0);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [flash, setFlash] = useState(false);
-  const formDataRef = useRef(new FormData());
+  // const formDataRef = useRef(new FormData());
+  const setImageStore = pictureStore((state) => state.addPhoto);
+  const navigate = useNavigate();
 
   const capturePhoto = useCallback(() => {
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
       if (imageSrc) {
         const blob = dataURLtoBlob(imageSrc);
-        formDataRef.current.append(
-          `photo_${pictureCount + 1}`,
-          blob,
-          `photo_${pictureCount + 1}.png`,
-        );
+        setImageStore(blob, pictureCount);
         setPictureCount((prevCount) => prevCount + 1);
       }
     }
@@ -43,10 +43,7 @@ const Picture = () => {
       if (countdown === null) {
         setCountdown(5);
       } else if (countdown > 0) {
-        countdownTimer = setTimeout(
-          () => setCountdown((prev) => (prev as number) - 1),
-          1000,
-        );
+        countdownTimer = setTimeout(() => setCountdown((prev) => (prev as number) - 1), 1000);
       } else if (countdown === 0) {
         capturePhoto();
         setCountdown(5);
@@ -54,6 +51,7 @@ const Picture = () => {
     } else if (pictureCount === 8) {
       setIsTakingPictures(false);
       setCountdown(null);
+      navigate("/image-input");
     }
 
     return () => clearTimeout(countdownTimer);
@@ -76,22 +74,12 @@ const Picture = () => {
         <S.Container>
           <S.GoBack src={GoBack} alt="뒤로가기" />
           <S.Camera flash={flash}>
-            <Webcam
-              ref={webcamRef}
-              width={1280}
-              height={880}
-              mirrored={true}
-              screenshotFormat="image/png"
-            />
+            <Webcam ref={webcamRef} width={1280} height={880} mirrored={true} screenshotFormat="image/png" />
             {countdown !== null && <S.Timer>{countdown}</S.Timer>}
           </S.Camera>
           <S.PictureDetailContainer>
             <S.PictureNum>{pictureCount}/8</S.PictureNum>
-            <S.WhiteCamara
-              src={WhiteCamara}
-              alt="하얀색카메라"
-              onClick={startTakingPictures}
-            />
+            <S.WhiteCamara src={WhiteCamara} alt="하얀색카메라" onClick={startTakingPictures} />
           </S.PictureDetailContainer>
         </S.Container>
       </BackGround>
