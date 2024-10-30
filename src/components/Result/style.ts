@@ -80,7 +80,6 @@ export const UnderTextContainer = styled.p`
 `;
 export const BoldText = styled.p`
   color: var(--Text-Black, #000);
-  font-family: Pretendard;
   font-size: 32px;
   font-style: normal;
   font-weight: 800;
