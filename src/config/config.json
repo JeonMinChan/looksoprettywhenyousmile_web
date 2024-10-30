@@ -1,3 +1,6 @@
 {
-  "server": "http://192.168.105.67:8080/"
+  "server": "http://192.168.105.67:8080/",
+  "AIURL": "https://api.segmind.com/v1/flux-img2img",
+  "AIKEY": "SG_6c3bb1aad539980e",
+  "nightServer": "https://keen-feasible-snake.ngrok-free.app"
 }
