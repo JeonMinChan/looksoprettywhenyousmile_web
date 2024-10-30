@@ -20,7 +20,12 @@ function App() {
           <Route path="/choose" element={<ChooseFrame />} />
           <Route
             path="/frame-input"
-            element={<FrameInputPage setIsSideBarOpen={setIsSideBarOpen} setImgUrl={setImgUrl} />}
+            element={
+              <FrameInputPage
+                setIsSideBarOpen={setIsSideBarOpen}
+                setImgUrl={setImgUrl}
+              />
+            }
           />
         </Routes>
         {isSideBarOpen && <SideBar imgUrl={imgUrl} setIsShowModal={setIsShowModal} />}
