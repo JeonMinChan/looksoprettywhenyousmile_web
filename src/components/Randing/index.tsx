@@ -18,7 +18,7 @@ const Randing = () => {
       <S.Title>넌 웃을 때가 예쁘더라</S.Title>
       <S.SubTitle>세계 최고의, 스티커 사진 서비스.</S.SubTitle>
       <S.StartBtn>
-        <Button title="시작하기" onClick={() => navigate("/frame-input")} />
+        <Button title="시작하기" onClick={() => navigate("/frame-choose")} />
       </S.StartBtn>
     </S.Layout>
   );
