@@ -4,7 +4,6 @@ import html2canvas from 'html2canvas';
 import * as S from './style';
 import { CameraIcon, DownLoadIcon, EditIcon, ShareIcon } from '@src/assets/svg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { mokFrame4 } from '@src/assets/images';
 
 interface SideBarProps {
   imgUrl: string;
@@ -43,7 +42,7 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBar
 
   return (
     <S.Wrapper ref={ref}>
-      <S.Img src={mokFrame4} alt={imgUrl} />
+      <S.Img src={imgUrl} alt={imgUrl} />
       <S.ButtonContainer path={path}>
         <S.Button
           onClick={() => {
