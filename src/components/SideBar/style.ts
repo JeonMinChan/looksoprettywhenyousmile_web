@@ -24,7 +24,7 @@ export const ButtonContainer = styled.div<{ path: string }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: ${({ path }) => (path !== 'choose' ? '100%' : '')};
+  gap: 1.5rem;
 `;
 
 export const Button = styled.button`

@@ -28,12 +28,13 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
       const isAlreadySelected = prevSelectedIndexes.includes(index);
 
       if (isAlreadySelected) {
+        // 선택 해제 로직
         setCopiedImages((prevCopiedImages) => {
-          const removedImagePosition = prevCopiedImages.find((image) => image.originalIndex === index);
-          if (removedImagePosition) {
+          const removedImage = prevCopiedImages.find((image) => image.originalIndex === index);
+          if (removedImage) {
             setAvailablePositions((positions) => [
-              { index, top: removedImagePosition.top, left: removedImagePosition.left },
               ...positions,
+              { index, top: removedImage.top, left: removedImage.left },
             ]);
           }
           return prevCopiedImages.filter((image) => image.originalIndex !== index);
@@ -42,6 +43,7 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
       }
 
       if (prevSelectedIndexes.length < 4) {
+        // 선택 추가 로직
         const newPosition = { src, top: 0, left: 0, originalIndex: index };
 
         if (availablePositions.length > 0) {
