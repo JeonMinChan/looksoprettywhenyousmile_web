@@ -11,6 +11,8 @@ export const GoBack = styled.img`
 `;
 
 export const Layout = styled.main`
+  position: relative;
+  overflow: hidden;
   width: 1000px;
   height: 720px;
   background-color: white;
@@ -29,11 +31,19 @@ export const MainContainer = styled.div`
   align-items: center;
 `;
 
-export const Title = styled.span`
-  color: var(--Text-Black, #000);
-  text-align: center;
-  font-size: 40px;
-  font-weight: 600;
+export const Frame = styled.img`
+  position: relative;
+  cursor: pointer;
+  z-index: 100;
+  cursor: move;
+`;
+
+export const UploadedImage = styled.img`
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  cursor: move;
+  z-index: 105;
 `;
 
 export const SlideContainer = styled.div`
