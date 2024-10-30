@@ -46,25 +46,11 @@ const FindFrame = () => {
       </S.Layout>
       {selectedFrame && (
         <div>
-          <SideBar
-            imgUrl={selectedFrame}
-            setIsShowModal={() => false}
-            setIsSideBarOpen={function (_value: React.SetStateAction<boolean>): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
+          <SideBar imgUrl={selectedFrame} setIsShowModal={() => false} />
         </div>
       )}
       <S.SlideContainer show={Boolean(selectedFrame)}>
-        {selectedFrame && (
-          <SideBar
-            imgUrl={selectedFrame}
-            setIsShowModal={() => false}
-            setIsSideBarOpen={function (): void {
-              throw new Error('Function not implemented.');
-            }}
-          />
-        )}
+        {selectedFrame && <SideBar imgUrl={selectedFrame} setIsShowModal={() => false} />}
       </S.SlideContainer>
     </BackGround>
   );
