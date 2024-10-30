@@ -1,4 +1,4 @@
-import { bear1, bear2, bear3, mokFrame1 } from '@src/assets/images';
+import { bear1, bear2, bear3, mokFrame1, mokFrame2, mokFrame3, mokFrame4 } from '@src/assets/images';
 
 export const DUMMY_PHOTO = [
   {
@@ -19,15 +19,15 @@ export const DUMMY_PHOTO = [
   },
   {
     id: 5,
-    img: bear1,
+    img: mokFrame2,
   },
   {
     id: 6,
-    img: bear1,
+    img: mokFrame3,
   },
   {
     id: 7,
-    img: bear1,
+    img: mokFrame4,
   },
   {
     id: 8,

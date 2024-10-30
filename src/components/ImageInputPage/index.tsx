@@ -12,42 +12,51 @@ interface ImageInputProps {
 const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
   const [copiedImages, setCopiedImages] = useState<{ src: string; top: number; left: number }[]>([]);
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
-  const [canceledPositions, setCanceledPositions] = useState<number[]>([]);
+  const [availablePositions, setAvailablePositions] = useState<{ index: number; top: number; left: number }[]>([]);
 
   useEffect(() => {
     setIsSideBarOpen(true);
-  }, []);
+  }, [setIsSideBarOpen]);
 
   const handleImageClick = (index: number, src: string) => {
     setSelectedIndexes((prev) => {
-      if (prev.includes(index)) {
-        setCopiedImages((images) => {
-          const newImages = images.filter((image) => image.src !== src);
-          setCanceledPositions((positions) => [...positions, images.findIndex((image) => image.src === src)]);
-          return newImages;
-        });
+      const isAlreadySelected = prev.includes(index);
+
+      if (isAlreadySelected) {
+        const removedImagePosition = copiedImages.find((image) => image.src === src);
+
+        if (removedImagePosition) {
+          setAvailablePositions((positions) => [
+            ...positions,
+            { index, top: removedImagePosition.top, left: removedImagePosition.left },
+          ]);
+        }
+
+        setCopiedImages((images) => images.filter((image) => image.src !== src));
         return prev.filter((i) => i !== index);
       }
 
       if (prev.length < 4) {
-        const canceledPosition = canceledPositions.shift();
-        const newPosition = canceledPosition !== undefined ? canceledPosition : prev.length;
+        const newPosition = { src, top: 0, left: 0 };
 
-        if (sideBarRef.current) {
-          const sidebarRect = sideBarRef.current.getBoundingClientRect();
-          const position = {
-            src,
-            top: sidebarRect.top + 65 + newPosition * 99.5,
-            left: sidebarRect.left + 46.5,
-          };
-          setCopiedImages((images) => {
-            const updatedImages = [...images];
-            updatedImages[newPosition] = position;
-            return updatedImages;
-          });
+        if (availablePositions.length > 0) {
+          const position = availablePositions[0];
+          newPosition.top = position.top;
+          newPosition.left = position.left;
+
+          setAvailablePositions((positions) => positions.slice(1));
+        } else {
+          if (sideBarRef.current) {
+            const sidebarRect = sideBarRef.current.getBoundingClientRect();
+            newPosition.top = sidebarRect.top + 65 + prev.length * 99.5;
+            newPosition.left = sidebarRect.left + 46.5;
+          }
         }
+
+        setCopiedImages((images) => [...images, newPosition]);
         return [...prev, index];
       }
+
       return prev;
     });
   };
