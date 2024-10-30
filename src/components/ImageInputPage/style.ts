@@ -1,31 +1,32 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Layout = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-
-  justify-content: space-between;
   align-items: center;
-
-  padding: 20px 30px;
 `;
 
 export const Container = styled.div`
-  width: calc(80% - 60px);
-  height: calc(100% - 40px);
+  width: 83.875rem;
+  height: 45rem;
+
+  margin-left: 5rem;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  border-radius: 1.875rem;
+  background: #fff;
+  box-shadow: 0px 10px 40px 20px rgba(0, 0, 0, 0.25);
 `;
 
 export const Title = styled.h1`
-  color: #000;
-  text-align: center;
-  font-size: 64px;
+  font-size: 3rem;
+  font-style: normal;
   font-weight: 600;
+  line-height: normal;
 `;
 
 export const ImageContainer = styled.div`
@@ -33,19 +34,22 @@ export const ImageContainer = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  height: 40%;
-  gap: 10px;
+  width: 100%;
+  gap: 1.875rem;
 `;
 
 export const Picture = styled.img`
-  width: 220px;
-  height: 200px;
+  width: 18rem;
+  height: 12.375rem;
 
   border: none;
   border-radius: 20px;
 
   cursor: pointer;
+
+  &:hover {
+    outline: 0.4375rem solid #777;
+  }
 `;
 
 export const FrameContainer = styled.div`
@@ -68,4 +72,20 @@ export const FrameContainer = styled.div`
     width: 255px;
     height: 700px;
   }
+`;
+
+export const NumberCircle = styled.div`
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.625rem;
+  background: #ffe1cc;
+`;
+
+export const NumberText = styled.p`
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: normal;
 `;
