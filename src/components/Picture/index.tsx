@@ -35,7 +35,7 @@ const Picture = () => {
   const startTakingPictures = () => {
     setIsTakingPictures(true);
     setPictureCount(0);
-    setCountdown(0);
+    setCountdown(5);
   };
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const Picture = () => {
         countdownTimer = setTimeout(() => setCountdown((prev) => (prev as number) - 1), 1000);
       } else if (countdown === 0) {
         capturePhoto();
-        setCountdown(0);
+        setCountdown(5);
       }
     } else if (pictureCount === 8) {
       setIsTakingPictures(false);

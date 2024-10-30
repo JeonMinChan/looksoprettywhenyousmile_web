@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Layout = styled.main`
   padding: 50px 145px 60px 50px;
@@ -37,7 +37,9 @@ export const MainContainer = styled.div`
   /* gap: 160px; */
 `;
 export const Frame = styled.img`
-  padding: 0 70px;
+  width: 9.375rem;
+  height: 29.46694rem;
+  box-shadow: 4px 5px 10px 4px rgba(0, 0, 0, 0.25);
 `;
 export const QrContainer = styled.div`
   display: flex;
