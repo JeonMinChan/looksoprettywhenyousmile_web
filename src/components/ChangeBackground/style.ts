@@ -5,6 +5,7 @@ export const Layout = styled.div`
   width: 100%;
   height: 100%;
   align-items: center;
+  justify-content: space-evenly;
 `;
 
 export const Container = styled.div`
@@ -31,13 +32,35 @@ export const Title = styled.h1`
 
 export const ImageContainer = styled.div`
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  width: 20%;
-  gap: 1.875rem;
+  width: 220px;
+  height: 700px;
+  gap: 100px;
 
   background: white;
+
+  border: none;
+  border-radius: 30px;
+`;
+
+export const IconWrap = styled.div`
+  width: 70px;
+  height: 70px;
+
+  background: #ff7a1b;
+  border: none;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+
+  top: 70%;
 `;
 
 export const Picture = styled.img`

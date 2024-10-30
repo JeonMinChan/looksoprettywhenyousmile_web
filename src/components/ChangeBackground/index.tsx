@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as S from "./style";
 import BackGround from "../common/BackGround";
 import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
-import { ArrowIcon } from "@src/assets/svg";
+import { ArrowIcon, DownLoadIcon } from "@src/assets/svg";
 import { completePictureStore } from "@src/stores/Picture/picture.stores";
 import { useLinkPost } from "@src/queries/DownloadLink/downloadLink.query";
 import axios from "axios";
@@ -27,7 +27,6 @@ const ChagneBackground = () => {
     linkPostMutation.mutate(formData.get("image")!, {
       onSuccess: (response) => {
         setImage(response.url);
-        
 
         setTimeout(() => {
           deleteBackGround(response.url);
@@ -69,7 +68,6 @@ const ChagneBackground = () => {
           ) : (
             <span>선택된 사진 없음</span>
           )}
-
           <S.InputBox>
             <S.Input
               onChange={(e) => setKeyword(e.target.value)}
@@ -111,6 +109,9 @@ const ChagneBackground = () => {
               }}
             />
           ))}
+          <S.IconWrap>
+            <DownLoadIcon />
+          </S.IconWrap>
         </S.ImageContainer>
       </S.Layout>
     </BackGround>
