@@ -4,14 +4,17 @@ import html2canvas from 'html2canvas';
 import * as S from './style';
 import { CameraIcon, DownLoadIcon, EditIcon, ShareIcon } from '@src/assets/svg';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { mokFrame1 } from '@src/assets/images';
 
 interface SideBarProps {
   imgUrl: string;
   setIsSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBarOpen }, ref) => {
+const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBarOpen, setIsShowModal }, ref) => {
   const navigate = useNavigate();
+
   const { pathname } = useLocation();
   const [path, setPath] = useState<string>('');
 
@@ -20,7 +23,8 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBar
       setPath('frame-input');
     } else if (pathname.includes('choose')) {
       setPath('choose');
-    } else if (pathname.includes('/image-input')) {
+      return;
+    } else if (pathname.includes('image-input')) {
       setPath('image-input');
     }
   }, [pathname]);
@@ -42,7 +46,7 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBar
 
   return (
     <S.Wrapper ref={ref}>
-      <S.Img src={imgUrl} alt={imgUrl} />
+      <S.Img src={mokFrame1} alt={imgUrl} />
       <S.ButtonContainer path={path}>
         <S.Button
           onClick={() => {
@@ -57,7 +61,9 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBar
         {path !== 'choose' && (
           <S.Button
             onClick={() => {
-              if (path !== 'frame-input') {
+              if (path === 'frame-input') {
+                setIsShowModal(true);
+              } else if (path !== 'frame-input') {
                 captureSpecificArea(1530, 207.5, 160, 502.588);
               }
             }}
