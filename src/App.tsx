@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/globalStyle";
+import { QueryClient, QueryClientProvider } from "react-query";
 import {
   FrameInputPage,
   SideBar,
@@ -17,9 +18,20 @@ function App() {
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
   const [imgUrl, setImgUrl] = useState<string>("");
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        retryOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+      },
+    },
+  });
 
   return (
-    <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+     <BrowserRouter>
       <GlobalStyle />
       <BackGround backgroundImgUrl={BackGRoundImg}>
         <Routes>
@@ -42,6 +54,7 @@ function App() {
         {isShowModal && <ShareToast setIsShowModal={setIsShowModal} />}
       </BackGround>
     </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
