@@ -16,10 +16,10 @@ const ChooseFrame = () => {
             <FrameContainer frameType="검정색 프레임" />
             <FrameContainer frameType="DSM 프레임" />
             <S.BtnContainer>
-              <Button title="직접 만들기" />
+              <Button title="직접 만들기" disabled />
               <Button title="AI로 생성하기" />
               <Button title="프레임 찾아보기" />
-              <Button title="사진 찍기" />
+              <Button title="사진 찍기" disabled />
             </S.BtnContainer>
           </S.Frame>
         </S.WhiteLayout>
