@@ -6,9 +6,10 @@ import { useLocation } from 'react-router-dom';
 
 interface SideBarProps {
   imgUrl: string;
+  setIsShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SideBar = ({ imgUrl }: SideBarProps) => {
+const SideBar = ({ imgUrl, setIsShowModal }: SideBarProps) => {
   const { pathname } = useLocation();
   const [path, setPath] = useState<string>('');
   useEffect(() => {
@@ -18,7 +19,7 @@ const SideBar = ({ imgUrl }: SideBarProps) => {
     } else if (pathname.includes('choose')) {
       setPath('choose');
       return;
-    } else if (pathname.includes('/image-input')) {
+    } else if (pathname.includes('image-input')) {
       setPath('image-input');
       return;
     }
@@ -29,7 +30,11 @@ const SideBar = ({ imgUrl }: SideBarProps) => {
       <S.Img src={imgUrl} />
       <S.ButtonContainer path={path}>
         <S.Button>{path === 'frame-input' ? <CameraIcon /> : <EditIcon />}</S.Button>
-        {path !== 'choose' && <S.Button>{path === 'frame-input' ? <ShareIcon /> : <DownLoadIcon />}</S.Button>}
+        {path !== 'choose' && (
+          <S.Button onClick={() => path === 'frame-input' && setIsShowModal(true)}>
+            {path === 'frame-input' ? <ShareIcon /> : <DownLoadIcon />}
+          </S.Button>
+        )}
       </S.ButtonContainer>
     </S.Wrapper>
   );

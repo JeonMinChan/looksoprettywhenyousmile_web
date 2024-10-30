@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-export const Layout = styled.main`
+export const MainLayout = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 60px;
 `;
 export const WhiteLayout = styled.div`
   display: flex;

@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const Layout = styled.main`
   display: flex;
+  width: 100vw;
+  height: 100vh;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
@@ -60,7 +62,6 @@ export const StartBtn = styled.button`
   position: absolute;
   top: 70%;
   z-index: 2;
-  padding: 20px 80px;
   border-radius: 20px;
   background-color: #fe6b01;
   cursor: pointer;
