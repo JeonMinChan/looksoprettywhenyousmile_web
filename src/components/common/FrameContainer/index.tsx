@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as S from "./style";
 import WhiteFrame from "@src/assets/img/whiteFrame.svg";
 import BlackFrame from "@src/assets/img/blackFrame.svg";
@@ -6,11 +6,11 @@ import DsmFrame from "@src/assets/img/dsmFrame.svg";
 
 interface FrameProps {
   frameType: string;
+  isSelected: boolean;
+  onSelect: () => void;
 }
 
-const FrameContainer = ({ frameType }: FrameProps) => {
-  const [isActive, setIsActive] = useState(false);
-
+const FrameContainer = ({ frameType, isSelected, onSelect }: FrameProps) => {
   const FrameDetail = [
     { id: 1, title: "흰색 프레임", img: WhiteFrame },
     { id: 2, title: "검정색 프레임", img: BlackFrame },
@@ -19,12 +19,8 @@ const FrameContainer = ({ frameType }: FrameProps) => {
 
   const selectedFrame = FrameDetail.find((frame) => frame.title === frameType);
 
-  const handleClick = () => {
-    setIsActive((prev) => !prev);
-  };
-
   return (
-    <S.Layout isActive={isActive} onClick={handleClick}>
+    <S.Layout isActive={isSelected} onClick={onSelect}>
       {selectedFrame ? (
         <>
           <S.Title>{selectedFrame.title}</S.Title>

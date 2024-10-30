@@ -35,7 +35,7 @@ function App() {
       <GlobalStyle />
       <BackGround backgroundImgUrl={BackGRoundImg}>
         <Routes>
-          <Route path="/" element={<Randing />} />
+          <Route path="/" element={<ChooseFrame />} />
           <Route path="/frame-choose" element={<ChooseFrame />} />
           <Route path="/frame-find" element={<FindFrame />} />
           <Route
