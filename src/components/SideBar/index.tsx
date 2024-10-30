@@ -1,12 +1,12 @@
 import React, { useEffect, useState, forwardRef } from "react";
-
-import html2canvas from "html2canvas";
-import * as S from "./style";
-import { CameraIcon, DownLoadIcon, EditIcon, ShareIcon } from "@src/assets/svg";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useFramePost } from "@src/queries/ChooseFrame/chooseFrame.query";
-import { showToast } from "@src/libs/swal/toast";
-import { AxiosError } from "axios";
+import html2canvas from 'html2canvas';
+import * as S from './style';
+import { CameraIcon, DownLoadIcon, EditIcon, ShareIcon } from '@src/assets/svg';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useFramePost } from '@src/queries/ChooseFrame/chooseFrame.query';
+import { showToast } from '@src/libs/swal/toast';
+import { AxiosError } from 'axios';
+import { useImgStore } from '@src/stores/img.store';
 
 interface SideBarProps {
   imgUrl: string;
@@ -20,6 +20,14 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(
 
     const { pathname } = useLocation();
     const [path, setPath] = useState<string>("");
+=======
+const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ setIsSideBarOpen, setIsShowModal }, ref) => {
+  const navigate = useNavigate();
+
+  const imgUrl = useImgStore((state) => state.imgUrl);
+
+  const { pathname } = useLocation();
+  const [path, setPath] = useState<string>('');
 
     useEffect(() => {
       if (pathname.includes("frame-input")) {
@@ -61,23 +69,21 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(
       return file;
     };
 
-    const postFrameMutation = useFramePost();
-    const formData = new FormData();
-    const handleButtonClick = async () => {
-      if (path === "frame-input") {
-        const imageFile = await createImageFile();
-        setIsShowModal(true);
-        formData.append("image", imageFile);
-        postFrameMutation.mutate(formData.get("image")!, {
-          onSuccess: () => {
-            showToast("success", "이미지 공유 성공!");
-          },
-          onError: (error) => {
-            showToast("error", (error as AxiosError).message!);
-          },
-        });
-      }
-    };
+  const postFrameMutation = useFramePost();
+  const formData = new FormData();
+  const handleButtonClick = async () => {
+    const imageFile = await createImageFile();
+    setIsShowModal(true);
+    formData.append('image', imageFile);
+    postFrameMutation.mutate(formData.get('image')!, {
+      onSuccess: () => {
+        showToast('success', '이미지 공유 성공!');
+      },
+      onError: (error) => {
+        showToast('error', (error as AxiosError).message!);
+      },
+    });
+  };
 
     return (
       <S.Wrapper ref={ref}>
