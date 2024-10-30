@@ -12,6 +12,7 @@ interface ImageInputProps {
 const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
   const [copiedImages, setCopiedImages] = useState<{ src: string; top: number; left: number }[]>([]);
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
+  const [canceledPositions, setCanceledPositions] = useState<number[]>([]);
 
   useEffect(() => {
     setIsSideBarOpen(true);
@@ -19,20 +20,36 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
 
   const handleImageClick = (index: number, src: string) => {
     setSelectedIndexes((prev) => {
-      if (prev.includes(index)) return prev.filter((i) => i !== index);
-      if (prev.length < 3) return [...prev, index];
+      if (prev.includes(index)) {
+        setCopiedImages((images) => {
+          const newImages = images.filter((image) => image.src !== src);
+          setCanceledPositions((positions) => [...positions, images.findIndex((image) => image.src === src)]);
+          return newImages;
+        });
+        return prev.filter((i) => i !== index);
+      }
+
+      if (prev.length < 4) {
+        const canceledPosition = canceledPositions.shift();
+        const newPosition = canceledPosition !== undefined ? canceledPosition : prev.length;
+
+        if (sideBarRef.current) {
+          const sidebarRect = sideBarRef.current.getBoundingClientRect();
+          const position = {
+            src,
+            top: sidebarRect.top + 65 + newPosition * 99.5,
+            left: sidebarRect.left + 46.5,
+          };
+          setCopiedImages((images) => {
+            const updatedImages = [...images];
+            updatedImages[newPosition] = position;
+            return updatedImages;
+          });
+        }
+        return [...prev, index];
+      }
       return prev;
     });
-
-    if (sideBarRef.current) {
-      const sidebarRect = sideBarRef.current.getBoundingClientRect();
-      const newPosition = {
-        src,
-        top: sidebarRect.top + 65 + selectedIndexes.length * 99.5,
-        left: sidebarRect.left + 46.5,
-      };
-      setCopiedImages((prev) => [...prev, newPosition]);
-    }
   };
 
   return (
@@ -59,7 +76,7 @@ const ImageInput = ({ setIsSideBarOpen, sideBarRef }: ImageInputProps) => {
               <S.Picture
                 key={item.id}
                 src={item.img}
-                onClick={() => handleImageClick(index + 3, item.img)}
+                onClick={() => handleImageClick(index + 4, item.img)}
                 style={{
                   cursor: 'pointer',
                   outline: selectedIndexes.includes(index + 4) ? '0.4375rem solid #777' : 'none',

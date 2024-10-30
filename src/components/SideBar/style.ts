@@ -1,13 +1,4 @@
-import styled, { keyframes } from 'styled-components';
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   position: absolute;
@@ -20,8 +11,6 @@ export const Wrapper = styled.div`
   border-radius: 1.875rem;
   background: white;
   box-shadow: 0rem 0.625rem 2.5rem 1.25rem rgba(0, 0, 0, 0.25);
-  opacity: 0;
-  animation: ${fadeIn} 0.8s ease-in-out forwards;
 `;
 
 export const Img = styled.img`
