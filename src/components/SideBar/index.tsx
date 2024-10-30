@@ -1,7 +1,7 @@
 import React, { useEffect, useState, forwardRef } from 'react';
 import html2canvas from 'html2canvas';
 import * as S from './style';
-import { CameraIcon, DownLoadIcon, EditIcon, ShareIcon } from '@src/assets/svg';
+import { BackGroundIcon, CameraIcon, DownLoadIcon, ShareIcon } from '@src/assets/svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useFramePost } from '@src/queries/ChooseFrame/chooseFrame.query';
 import { showToast } from '@src/libs/swal/toast';
@@ -87,7 +87,7 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ setIsSideBarOpen, se
             }
           }}
         >
-          {path === 'frame-input' ? <CameraIcon /> : <EditIcon />}
+          {path === 'frame-input' ? <CameraIcon /> : <BackGroundIcon />}
         </S.Button>
         {path !== 'choose' && (
           <S.Button
