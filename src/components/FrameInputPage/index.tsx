@@ -4,13 +4,14 @@ import { useDebounce } from '@src/hooks';
 import { ArrowIcon, PreviousIcon } from '@src/assets/svg';
 import { useNavigate } from 'react-router-dom';
 import { mokFrame1, mokFrame2, mokFrame3, mokFrame4 } from '@src/assets/images';
+import { useImgStore } from '@src/stores/img.store';
 
 interface FrameInputProps {
   setIsSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setImgUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const FrameInputPage = ({ setIsSideBarOpen, setImgUrl }: FrameInputProps) => {
+const FrameInputPage = ({ setIsSideBarOpen }: FrameInputProps) => {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState<string>('');
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
@@ -18,6 +19,8 @@ const FrameInputPage = ({ setIsSideBarOpen, setImgUrl }: FrameInputProps) => {
   const [showFrames, setShowFrames] = useState<boolean>(false);
   const [isFirstRender, setIsFirstRender] = useState<boolean>(false);
   const [selectedFrame, setSelectedFrame] = useState<number | null>(null);
+
+  const { setImgUrl } = useImgStore();
 
   const debouncedKeyword = useDebounce(keyword, 1000);
 
@@ -88,6 +91,7 @@ const FrameInputPage = ({ setIsSideBarOpen, setImgUrl }: FrameInputProps) => {
                 handleImageClick(index);
                 setImgUrl(frame);
               }}
+              key={index}
             >
               <S.Img key={index} src={frame} alt={`Frame ${index + 1}`} />
             </S.ImgBox>
