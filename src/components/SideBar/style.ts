@@ -28,11 +28,11 @@ export const Img = styled.img`
   box-shadow: 0.25rem 0.3125rem 0.625rem 0.25rem rgba(0, 0, 0, 0.25);
 `;
 
-export const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div<{ path: string }>`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
+  align-items: center;
+  width: ${({ path }) => (path !== 'choose' ? '100%' : '')};
 `;
 
 export const Button = styled.button`
@@ -44,4 +44,9 @@ export const Button = styled.button`
   border-radius: 6.25rem;
   background: #ff7a1b;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #feb580;
+  }
 `;
