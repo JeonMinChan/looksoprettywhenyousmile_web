@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useGetRandomFrame } from '@src/queries/ChooseFrame/chooseFrame.query';
 
+
 const FindFrame = () => {
   const [selectedFrame, setSelectedFrame] = useState<string | null>(null);
   const [shouldFetch, setShouldFetch] = useState<boolean>(true);
@@ -36,7 +37,10 @@ const FindFrame = () => {
           <S.Title>원하는 프레임을 선택해주세요!</S.Title>
           <S.FrameLayout>
             {sharedFrame?.frames.map((detail) => (
-              <S.FrameContainer key={detail} onClick={() => handleFrameClick(detail)}>
+              <S.FrameContainer
+                key={detail}
+                onClick={() => handleFrameClick(detail)}
+              >
                 <img src={detail} alt="프레임 사진" style={{ width: 120 }} />
               </S.FrameContainer>
             ))}
