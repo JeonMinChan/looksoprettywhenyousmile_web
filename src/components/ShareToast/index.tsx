@@ -13,8 +13,10 @@ const ShareToast = ({ setIsShowModal }: ToastProps) => {
     setIsVisible(true);
     const timer = setTimeout(() => {
       setIsVisible(false);
-      setIsShowModal(false);
     }, 1000);
+    setTimeout(() => {
+      setIsShowModal(false);
+    }, 4000);
     return () => clearTimeout(timer);
   }, []);
 

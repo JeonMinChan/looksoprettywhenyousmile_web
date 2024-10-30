@@ -41,7 +41,7 @@ export const Wrapper = styled.div<{ isVisible: boolean }>`
       : css`
           ${slideDown} 0.5s forwards
         `};
-  animation-delay: ${({ isVisible }) => (isVisible ? '0s' : '1s')};
+  animation-delay: ${({ isVisible }) => (isVisible ? '0s' : '2s')};
 `;
 
 export const Text = styled.p`

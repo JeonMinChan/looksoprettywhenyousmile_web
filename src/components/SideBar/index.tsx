@@ -19,7 +19,7 @@ const SideBar = ({ imgUrl, setIsShowModal }: SideBarProps) => {
     } else if (pathname.includes('choose')) {
       setPath('choose');
       return;
-    } else if (pathname.includes('/image-input')) {
+    } else if (pathname.includes('image-input')) {
       setPath('image-input');
       return;
     }
@@ -30,7 +30,11 @@ const SideBar = ({ imgUrl, setIsShowModal }: SideBarProps) => {
       <S.Img src={imgUrl} />
       <S.ButtonContainer path={path}>
         <S.Button>{path === 'frame-input' ? <CameraIcon /> : <EditIcon />}</S.Button>
-        {path !== 'choose' && <S.Button>{path === 'frame-input' ? <ShareIcon /> : <DownLoadIcon />}</S.Button>}
+        {path !== 'choose' && (
+          <S.Button onClick={() => path === 'frame-input' && setIsShowModal(true)}>
+            {path === 'frame-input' ? <ShareIcon /> : <DownLoadIcon />}
+          </S.Button>
+        )}
       </S.ButtonContainer>
     </S.Wrapper>
   );
