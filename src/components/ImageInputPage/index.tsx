@@ -1,30 +1,57 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import * as S from "./style";
 import BackGround from "../common/BackGround";
 import BackGRoundImg from "@src/assets/img/defaultBackground.svg";
 import { mokFrame4 } from "@src/assets/images";
-import { pictureStore } from "@src/stores/Picture/picture.stores";
+import { DUMMY_PHOTO } from "@src/constants/Picture/picture.constants";
+import SideBar from "../SideBar";
 
 const ImageInput = () => {
-  const pictureData = pictureStore((state) => state.formData);
-  const picture: React.JSX.Element[] = [];
-  for (let [key, value] of pictureData.entries()) {
-    if (value instanceof Blob) {
-      const imageUrl = URL.createObjectURL(value);
-      picture.push(<img key={key} src={imageUrl} alt={key} />);
-    }
-  }
+  const [copiedImages, setCopiedImages] = useState<{ src: string; top: number; left: number }[]>([]);
+  const idRef = useRef<number>(0);
+
+  const handleImageClick = (src: string, idx: number, imageIdx: number) => {
+    const newPosition = {
+      src,
+      top: 71,
+      left: 1446 + imageIdx + idx,
+    };
+    setCopiedImages((prev) => [...prev, newPosition]);
+  };
 
   return (
     <BackGround backgroundImgUrl={BackGRoundImg}>
       <S.Layout>
         <S.Container>
           <S.Title>4장의 사진을 선택해주세요.</S.Title>
-          <S.ImageContainer>{picture}</S.ImageContainer>
+          <S.ImageContainer>
+            {DUMMY_PHOTO.map((item) => (
+              <S.Picture
+                key={item.id}
+                src={item.img}
+                onClick={() => handleImageClick(item.img, idRef.current + 1, item.id)}
+                style={{ cursor: "pointer" }}
+              />
+            ))}
+            {copiedImages.map((image, index) => (
+              <img
+                key={`${image.src}-${index}`}
+                src={image.src}
+                alt={`복사본-${index}`}
+                style={{
+                  position: "absolute",
+                  top: image.top,
+                  left: image.left,
+                  width: "165px",
+                  height: "111px",
+                  cursor: "pointer",
+                  zIndex: 5,
+                }}
+              />
+            ))}
+          </S.ImageContainer>
         </S.Container>
-        <S.FrameContainer>
-          <img src={mokFrame4} alt="피그마 프레임" />
-        </S.FrameContainer>
+        <SideBar imgUrl={mokFrame4} />
       </S.Layout>
     </BackGround>
   );

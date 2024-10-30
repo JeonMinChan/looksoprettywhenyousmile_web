@@ -36,16 +36,16 @@ export const ImageContainer = styled.div`
   width: 90%;
   height: 40%;
   gap: 10px;
+`;
 
-  img {
-    width: 220px;
-    height: 200px;
+export const Picture = styled.img`
+  width: 220px;
+  height: 200px;
 
-    border: none;
-    border-radius: 20px;
+  border: none;
+  border-radius: 20px;
 
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 export const FrameContainer = styled.div`
