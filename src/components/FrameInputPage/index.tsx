@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { mokFrame1, mokFrame2, mokFrame3, mokFrame4 } from '@src/assets/images';
 import CONFIG from '@src/config/config.json';
 import axios from 'axios';
+import { useImgStore } from '@src/stores/img.store';
 
 interface FrameInputProps {
   setIsSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,6 +22,8 @@ const FrameInputPage = ({ setIsSideBarOpen }: FrameInputProps) => {
   const [isFirstRender, setIsFirstRender] = useState<boolean>(false);
   const [selectedFrame, setSelectedFrame] = useState<number | null>(null);
   const [aiImg, setAIImg] = useState<string[]>([]);
+
+  const { setImgUrl } = useImgStore();
 
   const debouncedKeyword = useDebounce(keyword, 1000);
 
@@ -143,7 +146,7 @@ const FrameInputPage = ({ setIsSideBarOpen }: FrameInputProps) => {
                 className={selectedFrame === index ? 'selected' : ''}
                 onClick={() => {
                   handleImageClick(index);
-                  // setImgUrl(frame);
+                  setImgUrl(frame);
                 }}
                 key={index}
               >

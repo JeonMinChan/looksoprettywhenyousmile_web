@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useFramePost } from '@src/queries/ChooseFrame/chooseFrame.query';
 import { showToast } from '@src/libs/swal/toast';
 import { AxiosError } from 'axios';
+import { useImgStore } from '@src/stores/img.store';
 
 interface SideBarProps {
   imgUrl: string;
@@ -14,8 +15,10 @@ interface SideBarProps {
   setIsShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBarOpen, setIsShowModal }, ref) => {
+const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ setIsSideBarOpen, setIsShowModal }, ref) => {
   const navigate = useNavigate();
+
+  const imgUrl = useImgStore((state) => state.imgUrl);
 
   const { pathname } = useLocation();
   const [path, setPath] = useState<string>('');
@@ -58,19 +61,17 @@ const SideBar = forwardRef<HTMLDivElement, SideBarProps>(({ imgUrl, setIsSideBar
   const postFrameMutation = useFramePost();
   const formData = new FormData();
   const handleButtonClick = async () => {
-    if (path === 'frame-input') {
-      const imageFile = await createImageFile();
-      setIsShowModal(true);
-      formData.append('image', imageFile);
-      postFrameMutation.mutate(formData.get('image')!, {
-        onSuccess: () => {
-          showToast('success', '이미지 공유 성공!');
-        },
-        onError: (error) => {
-          showToast('error', (error as AxiosError).message!);
-        },
-      });
-    }
+    const imageFile = await createImageFile();
+    setIsShowModal(true);
+    formData.append('image', imageFile);
+    postFrameMutation.mutate(formData.get('image')!, {
+      onSuccess: () => {
+        showToast('success', '이미지 공유 성공!');
+      },
+      onError: (error) => {
+        showToast('error', (error as AxiosError).message!);
+      },
+    });
   };
 
   return (
